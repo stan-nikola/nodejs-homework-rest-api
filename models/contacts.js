@@ -1,44 +1,51 @@
+const { log } = require("console");
 const fs = require("fs/promises");
 
 const path = require("path");
+const { uid } = require("uid");
 const contactsPath = path.resolve("./models/contacts.json");
 
-const contactItems = async (req, res, next) => {
-  try {
-    return JSON.parse(await fs.readFile(contactsPath, "utf8"));
-  } catch (error) {
-    return res.status(500).send(error);
-  }
+const contactItems = async () => {
+  return JSON.parse(await fs.readFile(contactsPath, "utf8"));
 };
 
 const listContacts = async (req, res, next) => {
   try {
     const contacts = await contactItems();
-    return res.json(contacts);
+    return res.json({ contacts, message: "success" });
   } catch (error) {
     return res.status(500).send(error);
   }
 };
 
+function isValidId(arr, id) {
+  return arr.every((item) => item.id !== id);
+}
+
 const getContactById = async (req, res, next) => {
-  const contacts = await contactItems();
+  try {
+    const contacts = await contactItems();
 
-  if (contacts.every((item) => item.id !== req.params.contactId)) {
-    return res.status(400).send("Bad request");
+    if (isValidId(contacts, req.params.contactId)) {
+      return res.status(400).json({ message: "Bad request" });
+    }
+
+    const [contactById] = contacts.filter(
+      (contact) => contact.id === req.params.contactId
+    );
+
+    return res.json([{ contactById }, { message: "success" }]);
+  } catch (error) {
+    return res.status(500).send(error);
   }
-
-  const contactById = contacts.filter(
-    (contact) => contact.id === req.params.contactId
-  );
-
-  return res.json(contactById);
 };
 
 const removeContact = async (req, res, next) => {
-  const contacts = await contactItems();
   try {
-    if (contacts.every((item) => item.id !== req.params.contactId)) {
-      return res.status(400).send("Bad request");
+    const contacts = await contactItems();
+
+    if (isValidId(contacts, req.params.contactId)) {
+      return res.status(400).json({ message: "Bad request" });
     }
 
     const newContacts = contacts.filter(
@@ -48,16 +55,60 @@ const removeContact = async (req, res, next) => {
       if (err) console.log(err);
     });
     res.json({
-      message: `contact with id:${req.params.contactId} removed successfully`,
+      message: "success",
     });
   } catch (error) {
     return res.status(500).send(error);
   }
 };
 
-const addContact = async (body) => {};
+const addContact = async (req, res, next) => {
+  const { name, email, phone } = req.body;
 
-const updateContact = async (contactId, body) => {};
+  const newContact = {
+    id: uid(),
+    name,
+    email,
+    phone,
+  };
+
+  try {
+    const contacts = await contactItems();
+    await fs.writeFile(
+      contactsPath,
+      JSON.stringify([...contacts, newContact]),
+      (err) => {
+        if (err) console.log(err);
+      }
+    );
+
+    res.json({ message: "success" });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
+const updateContact = async (req, res, next) => {
+  const { name, email, phone } = req.body;
+
+  try {
+    const contacts = await contactItems();
+    if (isValidId(contacts, req.params.contactId)) {
+      return res.status(400).json({ message: "Bad request" });
+    }
+
+    const updateContacts = contacts.map((contact) =>
+      contact.id === req.params.contactId && name && email && phone
+        ? { ...contact, name, email, phone }
+        : contact
+    );
+    await fs.writeFile(contactsPath, JSON.stringify(updateContacts), (err) => {
+      if (err) console.log(err);
+    });
+
+    res.json({ updateContacts, message: "success" });
+  } catch (error) {}
+};
 
 module.exports = {
   listContacts,

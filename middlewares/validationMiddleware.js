@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { contactItems } = require("../controllers/contactsController");
+const { getContacts } = require("../models");
 
 const schema = Joi.object({
   name: Joi.string().min(3).max(26).required(),
@@ -12,7 +12,7 @@ const schema = Joi.object({
     .required(),
 });
 
-const addAndUpdateContactValidation = (req, res, next) => {
+const addAndUpdateValidation = (req, res, next) => {
   const validationResult = schema.validate(req.body);
   if (validationResult.error) {
     const [errorMessage] = validationResult.error.details;
@@ -22,7 +22,7 @@ const addAndUpdateContactValidation = (req, res, next) => {
 };
 
 const isValidId = async (req, res, next) => {
-  const contacts = await contactItems();
+  const contacts = await getContacts();
 
   const isIdInContacts = contacts.every(
     (item) => item.id !== req.params.contactId
@@ -32,6 +32,6 @@ const isValidId = async (req, res, next) => {
 };
 
 module.exports = {
-  addAndUpdateContactValidation,
+  addAndUpdateValidation,
   isValidId,
 };

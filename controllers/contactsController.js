@@ -8,7 +8,7 @@ const contactItems = async () =>
 
 const writeToDataBase = async (data) => {
   await fs.writeFile(contactsPath, JSON.stringify(data), (err) => {
-    if (err) return console.log(err);
+    if (err) throw new Error({ message: "file write error" });
   });
 };
 

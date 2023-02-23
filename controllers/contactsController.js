@@ -6,6 +6,12 @@ const { uid } = require("uid");
 const contactItems = async () =>
   JSON.parse(await fs.readFile(contactsPath, "utf8"));
 
+const writeToDataBase = async (data) => {
+  await fs.writeFile(contactsPath, JSON.stringify(data), (err) => {
+    if (err) return console.log(err);
+  });
+};
+
 const listContacts = async (req, res, next) => {
   try {
     const contacts = await contactItems();
@@ -37,9 +43,7 @@ const removeContact = async (req, res, next) => {
       (contact) => contact.id !== req.params.contactId
     );
 
-    await fs.writeFile(contactsPath, JSON.stringify(newContacts), (err) => {
-      if (err) return res.status(500).send(err);
-    });
+    writeToDataBase(newContacts);
 
     res.json({
       message: "contact deleted",
@@ -62,13 +66,7 @@ const addContact = async (req, res, next) => {
   try {
     const contacts = await contactItems();
 
-    await fs.writeFile(
-      contactsPath,
-      JSON.stringify([...contacts, newContact]),
-      (err) => {
-        if (err) return res.status(500).send(err);
-      }
-    );
+    writeToDataBase([...contacts, newContact]);
 
     res.status(201).json(newContact);
   } catch (error) {
@@ -79,23 +77,21 @@ const addContact = async (req, res, next) => {
 const updateContact = async (req, res, next) => {
   const { name, email, phone } = req.body;
 
+  let updatedContact;
+
   try {
     const contacts = await contactItems();
 
-    const updateContacts = contacts.map((contact) =>
-      contact.id === req.params.contactId
-        ? { ...contact, name, email, phone }
-        : contact
-    );
-    await fs.writeFile(contactsPath, JSON.stringify(updateContacts), (err) => {
-      if (err) return res.status(500).send(err);
+    const updateContacts = contacts.map((contact) => {
+      if (contact.id === req.params.contactId) {
+        updatedContact = { ...contact, name, email, phone };
+        return updatedContact;
+      }
+      return contact;
     });
+    writeToDataBase(updateContacts);
 
-    const [updateContact] = updateContacts.filter(
-      (contact) => contact.id === req.params.contactId
-    );
-
-    res.json(updateContact);
+    res.json(updatedContact);
   } catch (error) {
     return res.status(500).send(error);
   }

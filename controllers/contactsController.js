@@ -82,14 +82,14 @@ const updateContact = async (req, res, next) => {
   try {
     const contacts = await contactItems();
 
-    const updateContacts = contacts.map((contact) => {
+    const updatedContacts = contacts.map((contact) => {
       if (contact.id === req.params.contactId) {
         updatedContact = { ...contact, name, email, phone };
         return updatedContact;
       }
       return contact;
     });
-    writeToDataBase(updateContacts);
+    writeToDataBase(updatedContacts);
 
     res.json(updatedContact);
   } catch (error) {

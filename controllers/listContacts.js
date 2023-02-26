@@ -1,12 +1,8 @@
-const { getContacts } = require("../models");
+const { Contact } = require("../models");
 
 const listContacts = async (req, res, next) => {
-  try {
-    const contacts = await getContacts();
-    return res.json({ contacts, message: "success" });
-  } catch (error) {
-    next(error);
-  }
+  const contacts = await Contact.find({});
+  return res.json({ contacts, message: "success" });
 };
 
 module.exports = listContacts;

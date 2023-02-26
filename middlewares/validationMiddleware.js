@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { getContacts } = require("../models");
+// const { getContacts } = require("../models");
 
 const schema = Joi.object({
   name: Joi.string().min(3).max(26).required(),
@@ -22,12 +22,12 @@ const addAndUpdateValidation = (req, res, next) => {
 };
 
 const isValidId = async (req, res, next) => {
-  const contacts = await getContacts();
+  // const contacts = await getContacts();
 
-  const isIdInContacts = contacts.every(
-    (item) => item.id !== req.params.contactId
-  );
-  if (isIdInContacts) return res.status(404).json({ message: "Not found" });
+  // const isIdInContacts = contacts.every(
+  //   (item) => item.id !== req.params.contactId
+  // );
+  // if (isIdInContacts) return res.status(404).json({ message: "Not found" });
   next();
 };
 

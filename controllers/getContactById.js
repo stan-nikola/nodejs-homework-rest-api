@@ -1,17 +1,11 @@
-const { getContacts } = require("../models");
+const { Contact } = require("../models");
 
 const getContactById = async (req, res, next) => {
-  try {
-    const contacts = await getContacts();
+  const { contactId } = req.params;
 
-    const [contactById] = contacts.filter(
-      (contact) => contact.id === req.params.contactId
-    );
+  const contactById = await Contact.findById(contactId);
 
-    return res.json(contactById);
-  } catch (error) {
-    next(error);
-  }
+  return res.json(contactById);
 };
 
 module.exports = getContactById;

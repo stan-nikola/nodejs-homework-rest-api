@@ -10,25 +10,23 @@ const {
   updateContact,
 } = require("../../controllers");
 
-const {
-  addAndUpdateValidation,
-  isValidId,
-} = require("../../middlewares/validationMiddleware");
+const { idValidation, addAndUpdateValidation } = require("../../middlewares/");
 
 const router = express.Router();
 
-router.get("/", listContacts);
+router.get("/", asyncWrapper(listContacts));
 
-router.get("/:contactId", isValidId, asyncWrapper(getContactById));
+router.get("/:contactId", idValidation, asyncWrapper(getContactById));
 
 router.post("/", addAndUpdateValidation, asyncWrapper(addContact));
 
-router.delete("/:contactId", isValidId, asyncWrapper(removeContact));
+router.delete("/:contactId", idValidation, asyncWrapper(removeContact));
 
 router.put(
   "/:contactId",
+  idValidation,
   addAndUpdateValidation,
-  isValidId,
+
   asyncWrapper(updateContact)
 );
 

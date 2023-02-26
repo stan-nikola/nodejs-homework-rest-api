@@ -1,5 +1,7 @@
-const { Contact } = require("./contact");
+const { Contact, connectToContactsDb, joiSchema } = require("./contact");
 
 module.exports = {
   Contact,
+  connectToContactsDb,
+  joiSchema,
 };

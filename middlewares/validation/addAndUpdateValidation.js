@@ -1,15 +1,13 @@
-const addAndUpdateValidation = (req, res, next) => {
-  const { joiSchema } = require("../../models");
+const addAndUpdateValidation = (schema) => {
+  return (req, res, next) => {
+    const validationResult = schema.validate(req.body);
+    if (validationResult.error) {
+      const [errorMessage] = validationResult.error.details;
 
-  console.log(joiSchema);
-
-  const validationResult = joiSchema.validate(req.body);
-  if (validationResult.error) {
-    const [errorMessage] = validationResult.error.details;
-
-    return res.status(400).json({ message: errorMessage.message });
-  }
-  next();
+      return res.status(400).json({ message: errorMessage.message });
+    }
+    next();
+  };
 };
 
 module.exports = { addAndUpdateValidation };

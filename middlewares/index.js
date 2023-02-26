@@ -1,3 +1,3 @@
-const { idValidation, addAndUpdateValidation } = require("./validation");
+const { addAndUpdateValidation } = require("./validation");
 
-module.exports = { addAndUpdateValidation, idValidation };
+module.exports = { addAndUpdateValidation };

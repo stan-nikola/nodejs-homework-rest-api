@@ -1,11 +1,11 @@
-// const { getContacts, writeContacts } = require("../models");
+const { Contact } = require("../models");
 
 const updateContact = async (req, res, next) => {
-  // const { name, email, phone } = req.body;
+  const { contactId } = req.params;
 
-  let updatedContact;
+  const updateContact = await Contact.findByIdAndUpdate(contactId, req.body);
 
-  res.json(updatedContact);
+  res.json(updateContact);
 };
 
 module.exports = updateContact;

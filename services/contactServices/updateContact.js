@@ -1,5 +1,5 @@
 const { Contact } = require("../../models");
-const { NotFound } = require("http-errors");
+const { NonExistingParamsError } = require("../../helpers");
 
 const updateContact = async (id, body) => {
   const result = await Contact.findByIdAndUpdate(id, body, {
@@ -7,7 +7,7 @@ const updateContact = async (id, body) => {
   });
 
   if (!result) {
-    throw new NotFound(`Contact with id: ${id} not found`);
+    throw new NonExistingParamsError(`Contact with id: ${id} not found`);
   }
 
   return result;

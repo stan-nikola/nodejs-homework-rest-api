@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { asyncWrapper } = require("../../helpers/apiHelpers");
+const { asyncWrapper } = require("../../helpers");
 
 const {
   getContactsController,

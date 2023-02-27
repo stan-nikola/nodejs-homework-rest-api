@@ -6,7 +6,7 @@ const updateStatusContactController = async (req, res, next) => {
 
   const result = await updateContact(contactId, { favorite });
 
-  res.status(201).json(result);
+  res.json(result);
 };
 
 module.exports = { updateStatusContactController };

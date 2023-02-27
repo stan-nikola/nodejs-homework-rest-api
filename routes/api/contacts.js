@@ -3,37 +3,41 @@ const express = require("express");
 const { asyncWrapper } = require("../../helpers/apiHelpers");
 
 const {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
-  updateStatusContact,
+  getContactsController,
+  getContactByIdController,
+  removeContactController,
+  addContactController,
+  updateContactController,
+  updateStatusContactController,
 } = require("../../controllers");
+
 const { joiSchema, favoriteJoiSchema } = require("../../models");
 
 const { addAndUpdateValidation } = require("../../middlewares/");
 
 const router = express.Router();
 
-router.get("/", asyncWrapper(listContacts));
+router.get("/", asyncWrapper(getContactsController));
 
-router.get("/:contactId", asyncWrapper(getContactById));
+router.get("/:contactId", asyncWrapper(getContactByIdController));
 
-router.post("/", addAndUpdateValidation(joiSchema), asyncWrapper(addContact));
+router.delete("/:contactId", asyncWrapper(removeContactController));
 
-router.delete("/:contactId", asyncWrapper(removeContact));
+router.post(
+  "/",
+  addAndUpdateValidation(joiSchema),
+  asyncWrapper(addContactController)
+);
 
 router.put(
   "/:contactId",
   addAndUpdateValidation(joiSchema),
-  asyncWrapper(updateContact)
+  asyncWrapper(updateContactController)
 );
 router.patch(
   "/:contactId/favorite",
   addAndUpdateValidation(favoriteJoiSchema),
-
-  asyncWrapper(updateStatusContact)
+  asyncWrapper(updateStatusContactController)
 );
 
 module.exports = { contactsRouter: router };

@@ -1,17 +1,17 @@
 const {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
-  updateStatusContact,
-} = require("./contactsControllers");
+  getContactsController,
+  getContactByIdController,
+  removeContactController,
+  addContactController,
+  updateContactController,
+  updateStatusContactController,
+} = require("./contactControllers");
 
 module.exports = {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
-  updateStatusContact,
+  getContactsController,
+  getContactByIdController,
+  removeContactController,
+  addContactController,
+  updateContactController,
+  updateStatusContactController,
 };

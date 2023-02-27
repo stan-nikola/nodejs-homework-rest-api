@@ -1,7 +1,7 @@
 const { Contact } = require("../../models");
 const { NotFound } = require("http-errors");
 
-const updateStatusContact = async (req, res, next) => {
+const updateStatusContactController = async (req, res, next) => {
   const { contactId } = req.params;
 
   const { favorite } = req.body;
@@ -18,4 +18,4 @@ const updateStatusContact = async (req, res, next) => {
   res.status(201).json(result);
 };
 
-module.exports = updateStatusContact;
+module.exports = { updateStatusContactController };

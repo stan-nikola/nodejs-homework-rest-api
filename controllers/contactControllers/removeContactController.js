@@ -1,13 +1,8 @@
-const { Contact } = require("../../models");
-const { NotFound } = require("http-errors");
+const { removeContact } = require("../../services");
 
 const removeContactController = async (req, res, next) => {
   const { contactId } = req.params;
-  const result = await Contact.findByIdAndDelete(contactId);
-
-  if (!result) {
-    throw new NotFound(`Contact with id: ${contactId} not found`);
-  }
+  await removeContact(contactId);
 
   res.json({
     message: "contact deleted",

@@ -1,13 +1,13 @@
-const {
-  Contact,
-  connectToContactsDb,
-  joiSchema,
-  favoriteJoiSchema,
-} = require("./contact");
+const { Contact, joiContactSchema, favoriteJoiSchema } = require("./contact");
+
+const { User } = require("./user/userModel");
+
+const { connectToContactsDb } = require("./connection");
 
 module.exports = {
   Contact,
   connectToContactsDb,
-  joiSchema,
+  joiContactSchema,
   favoriteJoiSchema,
+  User,
 };

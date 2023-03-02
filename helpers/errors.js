@@ -12,4 +12,15 @@ class NonExistingParamsError extends Error {
   }
 }
 
-module.exports = { ValidationError, NonExistingParamsError };
+class NotAuthorizedError extends Error {
+  constructor(message) {
+    super(message);
+    this.status = 401;
+  }
+}
+
+module.exports = {
+  ValidationError,
+  NonExistingParamsError,
+  NotAuthorizedError,
+};

@@ -11,7 +11,7 @@ const {
   updateStatusContactController,
 } = require("../../controllers");
 
-const { joiSchema, favoriteJoiSchema } = require("../../models");
+const { joiContactSchema, joiFavoriteSchema } = require("../../models");
 
 const { addAndUpdateValidation } = require("../../middlewares/");
 
@@ -25,18 +25,18 @@ router.delete("/:contactId", asyncWrapper(removeContactController));
 
 router.post(
   "/",
-  addAndUpdateValidation(joiSchema),
+  addAndUpdateValidation(joiContactSchema),
   asyncWrapper(addContactController)
 );
 
 router.put(
   "/:contactId",
-  addAndUpdateValidation(joiSchema),
+  addAndUpdateValidation(joiContactSchema),
   asyncWrapper(updateContactController)
 );
 router.patch(
   "/:contactId/favorite",
-  addAndUpdateValidation(favoriteJoiSchema),
+  addAndUpdateValidation(joiFavoriteSchema),
   asyncWrapper(updateStatusContactController)
 );
 

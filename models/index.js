@@ -1,7 +1,13 @@
-const getContacts = require("./getContacts");
-const writeContacts = require("./writeContacts");
+const {
+  Contact,
+  connectToContactsDb,
+  joiSchema,
+  favoriteJoiSchema,
+} = require("./contact");
 
 module.exports = {
-  getContacts,
-  writeContacts,
+  Contact,
+  connectToContactsDb,
+  joiSchema,
+  favoriteJoiSchema,
 };

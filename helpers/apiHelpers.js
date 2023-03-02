@@ -1,7 +1,4 @@
-const {
-  ValidationError,
-  NonExistingParamsError,
-} = require("../helpers/errors");
+const { NodeContactsAppError } = require("../helpers/errors");
 
 const asyncWrapper = (controller) => {
   return (req, resp, next) => {
@@ -10,7 +7,7 @@ const asyncWrapper = (controller) => {
 };
 
 const errorHandler = (err, req, res, next) => {
-  if (err instanceof ValidationError || err instanceof NonExistingParamsError) {
+  if (err instanceof NodeContactsAppError) {
     return res.status(err.status).json({ message: err.message });
   }
   res.status(500).json({ message: err.message });

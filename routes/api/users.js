@@ -1,7 +1,7 @@
 const express = require("express");
 
-const { signUpController, logInController } = require("../../controllers");
 const { asyncWrapper } = require("../../helpers/apiHelpers");
+const { signUpController, logInController } = require("../../controllers");
 
 const router = express.Router();
 

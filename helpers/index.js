@@ -1,6 +1,7 @@
 const { asyncWrapper, errorHandler } = require("./apiHelpers");
 
 const {
+  NodeContactsAppError,
   ValidationError,
   NonExistingParamsError,
   NotAuthorizedError,
@@ -9,6 +10,7 @@ const {
 module.exports = {
   asyncWrapper,
   errorHandler,
+  NodeContactsAppError,
   ValidationError,
   NonExistingParamsError,
   NotAuthorizedError,

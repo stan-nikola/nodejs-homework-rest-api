@@ -8,10 +8,8 @@ const { NotAuthorizedError } = require("../../helpers/errors");
 const logInUser = async (email, password) => {
   const user = await User.findOne({ email });
 
-  const matchPassword = await bcrypt.compare(password, user.password);
-
-  if (!user || !matchPassword) {
-    throw new NotAuthorizedError({ message: "Email or password is wrong" });
+  if (!user || !(await bcrypt.compare(password, user.password))) {
+    throw new NotAuthorizedError("Email or password is wrong");
   }
 
   const token = jwt.sign(
@@ -19,7 +17,7 @@ const logInUser = async (email, password) => {
     process.env.JWT_SECRET
   );
 
-  return token;
+  return { token, user };
 };
 
 module.exports = { logInUser };

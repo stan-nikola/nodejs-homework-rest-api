@@ -6,6 +6,8 @@ const signUpUser = async (email, password) => {
   const user = new User({ email, password });
 
   await user.save();
+
+  //  TODO:Registration conflict error
   return user;
 };
 

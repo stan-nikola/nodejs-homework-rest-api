@@ -13,9 +13,14 @@ const {
 
 const { joiContactSchema, joiFavoriteSchema } = require("../../models");
 
-const { addAndUpdateValidation } = require("../../middlewares/");
+const {
+  addAndUpdateValidation,
+  authMiddleware,
+} = require("../../middlewares/");
 
 const router = express.Router();
+
+router.use(authMiddleware);
 
 router.get("/", asyncWrapper(getContactsController));
 

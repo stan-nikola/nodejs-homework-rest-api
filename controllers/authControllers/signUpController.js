@@ -5,7 +5,7 @@ const signUpController = async (req, res) => {
 
   const RequestBody = await signUpUser(email, password);
 
-  res.json({ RequestBody });
+  res.status(201).json({ RequestBody });
 };
 
 module.exports = { signUpController };

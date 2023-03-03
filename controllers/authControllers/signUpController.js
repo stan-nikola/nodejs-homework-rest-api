@@ -1,11 +1,9 @@
 const { signUpUser } = require("../../services");
 
 const signUpController = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, subscription } = await signUpUser(req.body);
 
-  const RequestBody = await signUpUser(email, password);
-
-  res.status(201).json({ RequestBody });
+  res.status(201).json({ email, subscription });
 };
 
 module.exports = { signUpController };

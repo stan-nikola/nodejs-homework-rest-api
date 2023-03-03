@@ -11,6 +11,7 @@ const authMiddleware = (req, res, next) => {
   try {
     const user = jwt.decode(token, process.env.JWT_SECRET);
     req.user = user;
+    req.token = token;
     next();
   } catch (error) {
     throw new NotAuthorizedError("Not authorized");

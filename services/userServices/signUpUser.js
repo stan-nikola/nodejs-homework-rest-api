@@ -1,14 +1,17 @@
 const { User } = require("../../models");
 
-// const { NotAuthorizedError } = require("../../helpers/errors");
+const { ConflictAuthorizedError } = require("../../helpers/errors");
 
-const signUpUser = async (email, password) => {
-  const user = new User({ email, password });
+const signUpUser = async (data) => {
+  const { email, password } = data;
 
-  await user.save();
+  const user = await User.findOne({ email });
 
-  //  TODO:Registration conflict error
-  return user;
+  if (user) {
+    throw new ConflictAuthorizedError("Email in use");
+  }
+
+  return User.create({ email, password });
 };
 
 module.exports = { signUpUser };

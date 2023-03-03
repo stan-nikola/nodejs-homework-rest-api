@@ -5,6 +5,7 @@ const {
   ValidationError,
   NonExistingParamsError,
   NotAuthorizedError,
+  ConflictAuthorizedError,
 } = require("./errors");
 
 module.exports = {
@@ -14,4 +15,5 @@ module.exports = {
   ValidationError,
   NonExistingParamsError,
   NotAuthorizedError,
+  ConflictAuthorizedError,
 };

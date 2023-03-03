@@ -1,15 +1,14 @@
 const { Contact } = require("../../models");
 
 const addContact = async ({ name, email, phone, favorite }, id) => {
-  const contact = new Contact({
+  const newContact = Contact.create({
     name,
     email,
     phone,
     favorite,
     owner: id,
   });
-
-  return await contact.save();
+  return newContact;
 };
 
 module.exports = { addContact };

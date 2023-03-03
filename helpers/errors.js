@@ -25,10 +25,17 @@ class NotAuthorizedError extends NodeContactsAppError {
     this.status = 401;
   }
 }
+class ConflictAuthorizedError extends NodeContactsAppError {
+  constructor(message) {
+    super(message);
+    this.status = 409;
+  }
+}
 
 module.exports = {
   NodeContactsAppError,
   ValidationError,
   NonExistingParamsError,
   NotAuthorizedError,
+  ConflictAuthorizedError,
 };

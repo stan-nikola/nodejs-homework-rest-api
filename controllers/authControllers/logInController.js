@@ -1,8 +1,7 @@
 const { logInUser } = require("../../services");
 
 const logInController = async (req, res) => {
-  const { email, password } = req.body;
-  const result = await logInUser(email, password);
+  const result = await logInUser(req.body);
 
   res.json(result);
 };

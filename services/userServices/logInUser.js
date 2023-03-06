@@ -5,32 +5,25 @@ const { User } = require("../../models");
 
 const { NotAuthorizedError } = require("../../helpers/errors");
 
-const logInUser = async (email, password) => {
-  const user = await User.findOne({ email });
+const logInUser = async ({ email: userEmail, password: userPassword }) => {
+  const user = await User.findOne({ email: userEmail });
 
-  const {
-    _id: userId,
-    email: userEmail,
-    password: userPassword,
-    subscription,
-    createdAt: userCreatedAt,
-  } = user;
+  const { _id, password, createdAt } = user;
 
-  if (!user || !(await bcrypt.compare(password, userPassword))) {
+  if (!user || !(await bcrypt.compare(userPassword, password))) {
     throw new NotAuthorizedError("Email or password is wrong");
   }
 
-  const token = jwt.sign(
-    { _id: userId, createdAt: userCreatedAt },
-    process.env.JWT_SECRET
+  const token = jwt.sign({ _id, createdAt }, process.env.JWT_SECRET);
+
+  const { email, subscription } = await User.findByIdAndUpdate(
+    { _id },
+    { token }
   );
 
   return {
     token,
-    user: {
-      email: userEmail,
-      subscription,
-    },
+    user: { email, subscription },
   };
 };
 

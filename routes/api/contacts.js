@@ -22,23 +22,23 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
-router.get("/", asyncWrapper(getContactsController));
+router
+  .route("/")
+  .get(asyncWrapper(getContactsController))
+  .post(
+    addAndUpdateValidation(joiContactSchema),
+    asyncWrapper(addContactController)
+  );
 
-router.get("/:contactId", asyncWrapper(getContactByIdController));
+router
+  .route("/:contactId")
+  .get(asyncWrapper(getContactByIdController))
+  .delete(asyncWrapper(removeContactController))
+  .put(
+    addAndUpdateValidation(joiContactSchema),
+    asyncWrapper(updateContactController)
+  );
 
-router.delete("/:contactId", asyncWrapper(removeContactController));
-
-router.post(
-  "/",
-  addAndUpdateValidation(joiContactSchema),
-  asyncWrapper(addContactController)
-);
-
-router.put(
-  "/:contactId",
-  addAndUpdateValidation(joiContactSchema),
-  asyncWrapper(updateContactController)
-);
 router.patch(
   "/:contactId/favorite",
   addAndUpdateValidation(joiFavoriteSchema),

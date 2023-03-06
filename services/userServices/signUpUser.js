@@ -11,7 +11,7 @@ const signUpUser = async (data) => {
     throw new ConflictAuthorizedError("Email in use");
   }
 
-  return User.create({ email, password });
+  return await User.create({ email, password });
 };
 
 module.exports = { signUpUser };

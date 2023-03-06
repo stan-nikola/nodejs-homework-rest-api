@@ -1,5 +1,12 @@
 const { addAndUpdateValidation } = require("./validation");
 
-const { authMiddleware } = require("./auth/authMiddleware");
+const {
+  authMiddleware,
+  tokenCheckMiddleware,
+} = require("./auth/authMiddlewares");
 
-module.exports = { addAndUpdateValidation, authMiddleware };
+module.exports = {
+  addAndUpdateValidation,
+  authMiddleware,
+  tokenCheckMiddleware,
+};

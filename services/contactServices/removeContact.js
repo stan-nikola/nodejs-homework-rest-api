@@ -1,10 +1,10 @@
 const { Contact } = require("../../models");
 const { NonExistingParamsError } = require("../../helpers");
 
-const removeContact = async (contactId, ownerId) => {
+const removeContact = async (contactId, owner) => {
   const result = await Contact.findOneAndDelete({
     _id: contactId,
-    owner: ownerId,
+    owner,
   });
 
   console.log(result);

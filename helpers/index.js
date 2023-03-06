@@ -8,6 +8,8 @@ const {
   ConflictAuthorizedError,
 } = require("./errors");
 
+const { decodeToken } = require("./decodeToken");
+
 module.exports = {
   asyncWrapper,
   errorHandler,
@@ -16,4 +18,5 @@ module.exports = {
   NonExistingParamsError,
   NotAuthorizedError,
   ConflictAuthorizedError,
+  decodeToken,
 };

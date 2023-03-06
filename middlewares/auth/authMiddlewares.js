@@ -1,29 +1,26 @@
-const jwt = require("jsonwebtoken");
-const { NotAuthorizedError } = require("../../helpers/errors");
+const { decodeToken, NotAuthorizedError } = require("../../helpers");
 
-const authMiddleware = (req, res, next) => {
+const { User } = require("../../models");
+
+const authMiddleware = async (req, res, next) => {
   const headerData = req.headers.authorization;
 
-  if (!headerData) {
-    throw new NotAuthorizedError("Not authorized");
-  }
-
-  const [, token] = headerData.split(" ");
-
-  if (!token) {
-    next(new NotAuthorizedError("Please, provide a token"));
-  }
+  !headerData && next(new NotAuthorizedError("Please, provide a token"));
 
   try {
-    const user = jwt.decode(token, process.env.JWT_SECRET);
-    if (!user) {
-      throw new NotAuthorizedError("Not authorized");
-    }
-    req.user = user;
-    req.token = token;
+    const [, token] = headerData.split(" ");
+
+    const { token: userToken } = await User.findOne({ token });
+
+    const decodedToken = decodeToken(" " + " " + userToken);
+
+    !decodedToken && next(new NotAuthorizedError("Not authorized"));
+
+    req.user = decodedToken;
+
     next();
   } catch (error) {
-    throw new NotAuthorizedError("Not authorized");
+    next(new NotAuthorizedError("Not authorized"));
   }
 };
 
@@ -32,7 +29,12 @@ const tokenCheckMiddleware = async (req, res, next) => {
 
   if (!headerData) {
     next(new NotAuthorizedError("Please, provide a token"));
+    return;
   }
+
+  const decodedToken = decodeToken(headerData);
+
+  !decodedToken && next(new NotAuthorizedError("Not authorized"));
 
   next();
 };

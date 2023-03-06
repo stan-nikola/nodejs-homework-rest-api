@@ -1,20 +1,19 @@
-const jwt = require("jsonwebtoken");
 const { User } = require("../../models");
 
 const { NotAuthorizedError } = require("../../helpers/errors");
 
+const { decodeToken } = require("../../helpers/decodeToken");
+
 const logOutUser = async (headerData) => {
-  const [, token] = headerData.split(" ");
+  const decodedToken = decodeToken(headerData);
 
-  const decodeToken = jwt.decode(token, process.env.JWT_SECRET);
+  console.log(decodedToken);
 
-  if (!decodeToken) {
-    throw new NotAuthorizedError("Not authorized");
-  }
+  if (!decodedToken) throw new NotAuthorizedError("Not authorized");
 
-  const { _id } = decodeToken;
+  const { _id } = decodedToken;
 
-  const user = await User.findOneAndUpdate({ _id, token }, { token: null });
+  const user = await User.findOneAndUpdate({ _id }, { token: null });
 
   if (!user) {
     throw new NotAuthorizedError("Not authorized");

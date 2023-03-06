@@ -1,9 +1,9 @@
 const { addContact } = require("../../services");
 
 const addContactController = async (req, res, next) => {
-  const { _id } = req.user;
+  const { _id: owner } = req.user;
 
-  const result = await addContact(req.body, _id);
+  const result = await addContact(req.body, owner);
 
   res.status(201).json(result);
 };

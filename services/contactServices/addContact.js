@@ -1,12 +1,12 @@
 const { Contact } = require("../../models");
 
-const addContact = async ({ name, email, phone, favorite }, id) => {
-  const newContact = Contact.create({
+const addContact = async ({ name, email, phone, favorite }, owner) => {
+  const newContact = await Contact.create({
     name,
     email,
     phone,
     favorite,
-    owner: id,
+    owner,
   });
   return newContact;
 };

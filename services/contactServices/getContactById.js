@@ -2,11 +2,8 @@ const { Contact } = require("../../models");
 
 const { NonExistingParamsError } = require("../../helpers");
 
-const getContactById = async (contactId, ownerId) => {
-  const result = await Contact.findOne(
-    { _id: contactId, owner: ownerId },
-    { owner: 0 }
-  );
+const getContactById = async (contactId, owner) => {
+  const result = await Contact.findOne({ _id: contactId, owner });
 
   if (!result) {
     throw new NonExistingParamsError(`Contact with id: ${contactId} not found`);

@@ -1,11 +1,11 @@
 const { Contact } = require("../../models");
 const { NonExistingParamsError } = require("../../helpers");
 
-const updateStatusContact = async (contactId, ownerId, favorite) => {
+const updateStatusContact = async (contactId, owner, favorite) => {
   const result = await Contact.findByIdAndUpdate(
-    { contactId, ownerId },
+    { contactId, owner },
     favorite,
-    { new: true, owner: 0 }
+    { new: true }
   );
 
   if (!result) {

@@ -11,7 +11,8 @@ const {
   signUpController,
   logInController,
   logOutController,
-} = require("./authControllers");
+  currentUserController,
+} = require("./userControllers");
 
 module.exports = {
   getContactsController,
@@ -23,4 +24,5 @@ module.exports = {
   signUpController,
   logInController,
   logOutController,
+  currentUserController,
 };

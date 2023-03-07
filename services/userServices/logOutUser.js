@@ -4,18 +4,14 @@ const { NotAuthorizedError } = require("../../helpers/errors");
 
 const { decodeToken } = require("../../helpers/decodeToken");
 
-const logOutUser = async (headerData) => {
-  const decodedToken = decodeToken(headerData);
-
-  console.log(decodedToken);
-
-  if (!decodedToken) throw new NotAuthorizedError("Not authorized");
+const logOutUser = async (token) => {
+  const decodedToken = decodeToken(token);
 
   const { _id } = decodedToken;
 
   const user = await User.findOneAndUpdate({ _id }, { token: null });
 
-  if (!user) {
+  if (!user.token) {
     throw new NotAuthorizedError("Not authorized");
   }
 };

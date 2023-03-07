@@ -3,20 +3,27 @@ const { decodeToken, NotAuthorizedError } = require("../../helpers");
 const { User } = require("../../models");
 
 const authMiddleware = async (req, res, next) => {
-  const headerData = req.headers.authorization;
+  const { authorization = "" } = req.headers;
 
-  !headerData && next(new NotAuthorizedError("Please, provide a token"));
+  const [bearer, token] = authorization.split(" ");
+
+  bearer !== "Bearer" && next(new NotAuthorizedError("Not authorized"));
 
   try {
-    const [, token] = headerData.split(" ");
+    const user = await User.findOne({ token });
 
-    const { token: userToken } = await User.findOne({ token });
+    !user.token && new NotAuthorizedError();
 
-    const decodedToken = decodeToken(" " + " " + userToken);
+    const decodedToken = decodeToken(user.token);
 
-    !decodedToken && next(new NotAuthorizedError("Not authorized"));
+    if (!decodedToken) {
+      next(new NotAuthorizedError("Not authorized"));
+      return;
+    }
 
-    req.user = decodedToken;
+    if (req.path !== "/logout") {
+      req.user = decodedToken;
+    }
 
     next();
   } catch (error) {
@@ -24,19 +31,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-const tokenCheckMiddleware = async (req, res, next) => {
-  const headerData = req.headers.authorization;
-
-  if (!headerData) {
-    next(new NotAuthorizedError("Please, provide a token"));
-    return;
-  }
-
-  const decodedToken = decodeToken(headerData);
-
-  !decodedToken && next(new NotAuthorizedError("Not authorized"));
-
-  next();
-};
-
-module.exports = { authMiddleware, tokenCheckMiddleware };
+module.exports = { authMiddleware };

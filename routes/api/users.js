@@ -8,17 +8,13 @@ const {
   currentUserController,
 } = require("../../controllers");
 
-const { tokenCheckMiddleware } = require("../../middlewares");
+const { authMiddleware } = require("../../middlewares");
 
 const router = express.Router();
 
 router.post("/signup", asyncWrapper(signUpController));
 router.post("/login", asyncWrapper(logInController));
-router.get("/logout", tokenCheckMiddleware, asyncWrapper(logOutController));
-router.get(
-  "/current",
-  tokenCheckMiddleware,
-  asyncWrapper(currentUserController)
-);
+router.get("/logout", authMiddleware, asyncWrapper(logOutController));
+router.get("/current", authMiddleware, asyncWrapper(currentUserController));
 
 module.exports = { usersRouter: router };

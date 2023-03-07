@@ -3,8 +3,8 @@ const { User } = require("../../models");
 const { NotAuthorizedError } = require("../../helpers/errors");
 const { decodeToken } = require("../../helpers/decodeToken");
 
-const currentUser = async (headerData) => {
-  const { _id } = decodeToken(headerData);
+const currentUser = async (token) => {
+  const { _id } = decodeToken(token);
 
   const user = await User.findOne(
     { _id },
@@ -12,7 +12,7 @@ const currentUser = async (headerData) => {
   );
 
   if (!user) {
-    throw new NotAuthorizedError("Not autvdsvdsdhorized");
+    throw new NotAuthorizedError("Not authorized");
   }
 
   return user;

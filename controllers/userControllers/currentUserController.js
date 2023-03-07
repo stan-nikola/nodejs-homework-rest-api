@@ -1,8 +1,11 @@
 const { currentUser } = require("../../services");
 
 const currentUserController = async (req, res) => {
-  const headerData = req.headers.authorization;
-  const result = await currentUser(headerData);
+  const { authorization = "" } = req.headers;
+
+  const [, token] = authorization.split(" ");
+
+  const result = await currentUser(token);
 
   res.json(result);
 };

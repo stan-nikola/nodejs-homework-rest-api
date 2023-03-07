@@ -1,9 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const decodeToken = (headerData) => {
-  if (!headerData) return null;
-
-  const [, token] = headerData.split(" ");
+const decodeToken = (token) => {
   return jwt.decode(token, process.env.JWT_SECRET);
 };
 

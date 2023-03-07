@@ -9,7 +9,13 @@ const getContactsController = async (req, res, next) => {
 
   const skip = (page - 1) * limit;
 
-  const contacts = await getContacts(owner, skip, limit, favorite);
+  let isFavorite = null;
+
+  if (favorite) {
+    isFavorite = JSON.parse(favorite);
+  }
+
+  const contacts = await getContacts(owner, skip, limit, isFavorite);
 
   return res.json({ contacts, message: "success" });
 };

@@ -6,6 +6,7 @@ const {
   logInController,
   logOutController,
   currentUserController,
+  subscriptionUserController,
 } = require("../../controllers");
 
 const { authMiddleware } = require("../../middlewares");
@@ -16,5 +17,10 @@ router.post("/signup", asyncWrapper(signUpController));
 router.post("/login", asyncWrapper(logInController));
 router.get("/logout", authMiddleware, asyncWrapper(logOutController));
 router.get("/current", authMiddleware, asyncWrapper(currentUserController));
+router.patch(
+  "/subscription",
+  authMiddleware,
+  asyncWrapper(subscriptionUserController)
+);
 
 module.exports = { usersRouter: router };

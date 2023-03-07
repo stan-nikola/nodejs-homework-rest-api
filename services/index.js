@@ -12,6 +12,7 @@ const {
   logInUser,
   logOutUser,
   currentUser,
+  changeUserSubscription,
 } = require("./userServices/");
 
 module.exports = {
@@ -25,4 +26,5 @@ module.exports = {
   logInUser,
   logOutUser,
   currentUser,
+  changeUserSubscription,
 };

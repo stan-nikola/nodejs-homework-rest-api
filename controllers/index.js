@@ -12,6 +12,7 @@ const {
   logInController,
   logOutController,
   currentUserController,
+  subscriptionUserController,
 } = require("./userControllers");
 
 module.exports = {
@@ -25,4 +26,5 @@ module.exports = {
   logInController,
   logOutController,
   currentUserController,
+  subscriptionUserController,
 };

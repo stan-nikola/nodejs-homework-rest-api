@@ -1,11 +1,9 @@
 const { logOutUser } = require("../../services");
 
 const logOutController = async (req, res) => {
-  const { authorization = "" } = req.headers;
+  const { _id } = req.user;
 
-  const [, token] = authorization.split(" ");
-
-  await logOutUser(token);
+  await logOutUser(_id);
   res.sendStatus(204);
 };
 

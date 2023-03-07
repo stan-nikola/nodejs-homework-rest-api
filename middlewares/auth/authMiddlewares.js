@@ -1,4 +1,4 @@
-const { decodeToken, NotAuthorizedError } = require("../../helpers");
+const { verifyToken, NotAuthorizedError } = require("../../helpers");
 
 const { User } = require("../../models");
 
@@ -12,17 +12,10 @@ const authMiddleware = async (req, res, next) => {
   try {
     const user = await User.findOne({ token });
 
-    !user.token && new NotAuthorizedError();
-
-    const decodedToken = decodeToken(user.token);
-
-    if (!decodedToken) {
-      next(new NotAuthorizedError("Not authorized"));
-      return;
-    }
+    const verifiedToken = verifyToken(user.token);
 
     if (req.path !== "/logout") {
-      req.user = decodedToken;
+      req.user = verifiedToken;
     }
 
     next();

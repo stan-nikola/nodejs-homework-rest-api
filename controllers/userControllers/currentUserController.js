@@ -1,11 +1,9 @@
 const { currentUser } = require("../../services");
 
 const currentUserController = async (req, res) => {
-  const { authorization = "" } = req.headers;
+  const { _id } = req.user;
 
-  const [, token] = authorization.split(" ");
-
-  const result = await currentUser(token);
+  const result = await currentUser(_id);
 
   res.json(result);
 };

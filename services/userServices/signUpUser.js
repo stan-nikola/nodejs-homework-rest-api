@@ -3,7 +3,7 @@ const { User } = require("../../models");
 const { ConflictAuthorizedError } = require("../../helpers/errors");
 
 const signUpUser = async (data) => {
-  const { email, password } = data;
+  const { email, password, subscription } = data;
 
   const user = await User.findOne({ email });
 
@@ -11,7 +11,7 @@ const signUpUser = async (data) => {
     throw new ConflictAuthorizedError("Email in use");
   }
 
-  return await User.create({ email, password });
+  return await User.create({ email, password, subscription });
 };
 
 module.exports = { signUpUser };

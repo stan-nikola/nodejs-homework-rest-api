@@ -14,9 +14,7 @@ const authMiddleware = async (req, res, next) => {
 
     const verifiedToken = verifyToken(user.token);
 
-    if (req.path !== "/logout") {
-      req.user = verifiedToken;
-    }
+    req.user = verifiedToken;
 
     next();
   } catch (error) {

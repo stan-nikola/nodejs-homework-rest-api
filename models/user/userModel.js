@@ -1,6 +1,22 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
-// const { Joi } = require("joi");
+const Joi = require("joi");
+
+const joiRegisterSchema = Joi.object({
+  email: Joi.string()
+    .email({
+      minDomainSegments: 2,
+      tlds: { allow: ["com", "net", "uk", "ua", "org"] },
+    })
+    .required(),
+  password: Joi.string().min(6).alphanum().required(),
+
+  subscription: Joi.string().valid("starter", "pro", "business"),
+});
+
+const joiUserSubscriptionSchema = Joi.object({
+  subscription: Joi.string().valid("starter", "pro", "business").required(),
+});
 
 const userSchema = Schema(
   {
@@ -32,13 +48,6 @@ userSchema.pre("save", async function () {
   }
 });
 
-// TODO:add Joi schema
-
-// const joiRegisterSchema = Joi.object({
-
-// });
-// const joiLoginSchema = Joi.object({});
-
 const User = model("user", userSchema);
 
-module.exports = { User };
+module.exports = { User, joiRegisterSchema, joiUserSubscriptionSchema };

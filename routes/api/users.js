@@ -9,17 +9,27 @@ const {
   subscriptionUserController,
 } = require("../../controllers");
 
-const { authMiddleware } = require("../../middlewares");
+const { authMiddleware, addAndUpdateValidation } = require("../../middlewares");
+
+const {
+  joiRegisterSchema,
+  joiUserSubscriptionSchema,
+} = require("../../models");
 
 const router = express.Router();
 
-router.post("/signup", asyncWrapper(signUpController));
+router.post(
+  "/signup",
+  addAndUpdateValidation(joiRegisterSchema),
+  asyncWrapper(signUpController)
+);
 router.post("/login", asyncWrapper(logInController));
 router.get("/logout", authMiddleware, asyncWrapper(logOutController));
 router.get("/current", authMiddleware, asyncWrapper(currentUserController));
 router.patch(
   "/subscription",
   authMiddleware,
+  addAndUpdateValidation(joiUserSubscriptionSchema),
   asyncWrapper(subscriptionUserController)
 );
 

@@ -1,10 +1,22 @@
 const { asyncWrapper, errorHandler } = require("./apiHelpers");
 
-const { ValidationError, NonExistingParamsError } = require("./errors");
+const {
+  NodeContactsAppError,
+  ValidationError,
+  NonExistingParamsError,
+  NotAuthorizedError,
+  ConflictAuthorizedError,
+} = require("./errors");
+
+const { verifyToken } = require("./verifyToken");
 
 module.exports = {
   asyncWrapper,
   errorHandler,
+  NodeContactsAppError,
   ValidationError,
   NonExistingParamsError,
+  NotAuthorizedError,
+  ConflictAuthorizedError,
+  verifyToken,
 };

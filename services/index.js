@@ -7,6 +7,14 @@ const {
   updateStatusContact,
 } = require("./contactServices");
 
+const {
+  signUpUser,
+  logInUser,
+  logOutUser,
+  currentUser,
+  changeUserSubscription,
+} = require("./userServices/");
+
 module.exports = {
   getContacts,
   getContactById,
@@ -14,4 +22,9 @@ module.exports = {
   addContact,
   updateContact,
   updateStatusContact,
+  signUpUser,
+  logInUser,
+  logOutUser,
+  currentUser,
+  changeUserSubscription,
 };

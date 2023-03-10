@@ -1,14 +1,17 @@
 const { Contact } = require("../../models");
 const { NonExistingParamsError } = require("../../helpers");
 
-const removeContact = async (id) => {
-  const result = await Contact.findByIdAndDelete(id);
+const removeContact = async (contactId, owner) => {
+  const result = await Contact.findOneAndDelete({
+    _id: contactId,
+    owner,
+  });
+
+  console.log(result);
 
   if (!result) {
-    throw new NonExistingParamsError(`Contact with id: ${id} not found`);
+    throw new NonExistingParamsError(`Contact with id: ${contactId} not found`);
   }
-
-  return result;
 };
 
 module.exports = { removeContact };

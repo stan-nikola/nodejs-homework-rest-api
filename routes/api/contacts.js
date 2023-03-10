@@ -11,32 +11,37 @@ const {
   updateStatusContactController,
 } = require("../../controllers");
 
-const { joiSchema, favoriteJoiSchema } = require("../../models");
+const { joiContactSchema, joiFavoriteSchema } = require("../../models");
 
-const { addAndUpdateValidation } = require("../../middlewares/");
+const {
+  addAndUpdateValidation,
+  authMiddleware,
+} = require("../../middlewares/");
 
 const router = express.Router();
 
-router.get("/", asyncWrapper(getContactsController));
+router.use(authMiddleware);
 
-router.get("/:contactId", asyncWrapper(getContactByIdController));
+router
+  .route("/")
+  .get(asyncWrapper(getContactsController))
+  .post(
+    addAndUpdateValidation(joiContactSchema),
+    asyncWrapper(addContactController)
+  );
 
-router.delete("/:contactId", asyncWrapper(removeContactController));
+router
+  .route("/:contactId")
+  .get(asyncWrapper(getContactByIdController))
+  .delete(asyncWrapper(removeContactController))
+  .put(
+    addAndUpdateValidation(joiContactSchema),
+    asyncWrapper(updateContactController)
+  );
 
-router.post(
-  "/",
-  addAndUpdateValidation(joiSchema),
-  asyncWrapper(addContactController)
-);
-
-router.put(
-  "/:contactId",
-  addAndUpdateValidation(joiSchema),
-  asyncWrapper(updateContactController)
-);
 router.patch(
   "/:contactId/favorite",
-  addAndUpdateValidation(favoriteJoiSchema),
+  addAndUpdateValidation(joiFavoriteSchema),
   asyncWrapper(updateStatusContactController)
 );
 

@@ -16,10 +16,9 @@ const getContacts = async (owner, query) => {
   return await Contact.find({
     owner,
   })
-
     .skip(skip)
     .limit(+limit)
-    .find(isFavorite);
+    .where(isFavorite);
 };
 
 module.exports = { getContacts };

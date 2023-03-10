@@ -8,6 +8,7 @@ const addContact = async ({ name, email, phone, favorite }, owner) => {
     favorite,
     owner,
   });
+
   return newContact;
 };
 

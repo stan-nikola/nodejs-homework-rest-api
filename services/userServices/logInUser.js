@@ -7,6 +7,7 @@ const { NotAuthorizedError } = require("../../helpers/errors");
 
 const logInUser = async ({ email: userEmail, password: userPassword }) => {
   const user = await User.findOne({ email: userEmail });
+  // const user = await User.exists({ email: userEmail });
 
   const { _id, password, createdAt } = user;
 

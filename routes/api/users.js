@@ -24,7 +24,7 @@ router.post(
   asyncWrapper(signUpController)
 );
 router.post("/login", asyncWrapper(logInController));
-router.get("/logout", authMiddleware, asyncWrapper(logOutController));
+router.post("/logout", authMiddleware, asyncWrapper(logOutController));
 router.get("/current", authMiddleware, asyncWrapper(currentUserController));
 router.patch(
   "/subscription",

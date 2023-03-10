@@ -1,31 +1,51 @@
-## GoIT Node.js Course Template Homework
+# Homework Node.js #5
 
-Виконайте форк цього репозиторію для виконання домашніх завдань (2-6)
-Форк створить репозиторій на вашому http://github.com
+![N|Solid](https://cdn.iconscout.com/icon/free/png-512/nodejs-2-226035.png?f=avif&w=256)
 
-Додайте ментора до колаборації
+# User model
 
-Для кожної домашньої роботи створюйте свою гілку.
+Content-Type: application/json
 
-- hw02
-- hw03
-- hw04
-- hw05
-- hw06
+- ### Create a new user
+  ##### **POST**​/users​/signup
 
-Кожна нова гілка для др повинна робитися з master
+```sh
+{
+ "email": "example@example.com", required
+ "password": "examplepassword", required,
+ "subscription": ["starter", "pro", "business"]
+}
+```
 
-Після того, як ви закінчили виконувати домашнє завдання у своїй гілці, необхідно зробити пулл-реквест (PR). Потім додати ментора для рев'ю коду. Тільки після того, як ментор заапрувить PR, ви можете виконати мердж гілки з домашнім завданням у майстер.
+- ### Log In User
+  ##### **POST**​/users/login
 
-Уважно читайте коментарі ментора. Виправте зауваження та зробіть коміт у гілці з домашнім завданням. Зміни підтягнуться у PR автоматично після того, як ви відправите коміт з виправленнями на github
-Після виправлення знову додайте ментора на рев'ю коду.
+```sh
+{
+ "email": "example@example.com", required,
+ "password": "examplepassword", required
+}
+```
 
-- При здачі домашньої роботи є посилання на PR
-- JS-код чистий та зрозумілий, для форматування використовується Prettier
+- ### Log Out User
+  ##### **POST**​/users/logout
 
-### Команди:
+```sh
+Authorization: "Bearer {{token}}"
+```
 
-- `npm start` &mdash; старт сервера в режимі production
-- `npm run start:dev` &mdash; старт сервера в режимі розробки (development)
-- `npm run lint` &mdash; запустити виконання перевірки коду з eslint, необхідно виконувати перед кожним PR та виправляти всі помилки лінтера
-- `npm lint:fix` &mdash; та ж перевірка лінтера, але з автоматичними виправленнями простих помилок
+- ### Get Current User
+  ##### **GET**​/users/current
+
+```sh
+Authorization: "Bearer {{token}}"
+```
+
+- ### Update User Subscription
+  ##### **PATCH**​/users/subscription
+
+```sh
+{
+   "subscription": ["starter", "pro", "business"], required
+}
+```

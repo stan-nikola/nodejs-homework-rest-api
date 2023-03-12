@@ -7,7 +7,11 @@ const {
   updateStatusContact,
 } = require("./contactServices");
 
-const { currentUser, changeUserSubscription } = require("./userServices/");
+const {
+  currentUser,
+  changeUserSubscription,
+  updateUserAvatar,
+} = require("./userServices/");
 
 const { signUpUser, logInUser, logOutUser } = require("./authServices");
 
@@ -23,4 +27,5 @@ module.exports = {
   logOutUser,
   currentUser,
   changeUserSubscription,
+  updateUserAvatar,
 };

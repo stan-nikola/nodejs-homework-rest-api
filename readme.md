@@ -1,4 +1,4 @@
-# Homework Node.js #5
+# Homework Node.js #4
 
 ![N|Solid](https://cdn.iconscout.com/icon/free/png-512/nodejs-2-226035.png?f=avif&w=256)
 
@@ -11,8 +11,8 @@ Content-Type: application/json
 
 ```sh
 {
- "email": "example@example.com", required
- "password": "examplepassword", required,
+ "email": "example@example.com", requeued,
+ "password": "examplepassword", requeued,
  "subscription": ["starter", "pro", "business"]
 }
 ```
@@ -22,8 +22,8 @@ Content-Type: application/json
 
 ```sh
 {
- "email": "example@example.com", required,
- "password": "examplepassword", required
+ "email": "example@example.com", requeued,
+ "password": "examplepassword", requeued
 }
 ```
 
@@ -46,6 +46,24 @@ Authorization: "Bearer {{token}}"
 
 ```sh
 {
-   "subscription": ["starter", "pro", "business"], required
+   "subscription": ["starter", "pro", "business"], requeued
 }
+```
+
+# ===============================================
+
+# Contact model
+
+- ### Get Contacts Pagination
+  ##### **GET**​contacts?page=<page>&limit=<limit contacts on page, max limit 20 items>
+
+```sh
+Example: "/contacts?page=1&limit=20"
+```
+
+- ### Get Contacts by Favorite
+  ##### **GET**​ /contacts?favorite=<true or false>
+
+```sh
+Example: "/contacts?favorite=true"
 ```

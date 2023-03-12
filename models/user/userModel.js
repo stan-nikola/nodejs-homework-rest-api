@@ -28,13 +28,14 @@ const userSchema = Schema(
       type: String,
       required: [true, "Email is required"],
       unique: true,
-      // lowercase: true,
+      lowercase: true,
     },
     subscription: {
       type: String,
       enum: ["starter", "pro", "business"],
       default: "starter",
     },
+    avatarURL: String,
     token: {
       type: String,
       default: null,

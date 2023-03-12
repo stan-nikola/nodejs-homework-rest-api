@@ -20,17 +20,21 @@ const multerConfig = multer.diskStorage({
 
 const uploadMiddleware = multer({ storage: multerConfig });
 
-const resizeAvatar = async (req, resp, next) => {
+const cropImageMiddleware = async (req, resp, next) => {
   try {
-    const { path, filename } = req.file;
+    const { path: filePath, filename } = req.file;
 
-    const cropImg = await Jimp.read(path);
-    cropImg.resize(250, 250).write(`${tempDir}/${filename}`);
+    const cropImgDir = path.join(tempDir, filename);
+
+    const cropImg = await Jimp.read(filePath);
+    cropImg.resize(250, 250).write(cropImgDir);
 
     next();
   } catch (error) {
-    next(new UnsupportedUploadFileError("File not supported, or exist"));
+    next(
+      new UnsupportedUploadFileError("File type unsupported or not provided")
+    );
   }
 };
 
-module.exports = { uploadMiddleware, resizeAvatar };
+module.exports = { uploadMiddleware, cropImageMiddleware };

@@ -1,10 +1,13 @@
 const { addAndUpdateValidation } = require("./validation");
 const { authMiddleware } = require("./auth/authMiddleware");
-const { uploadMiddleware, resizeAvatar } = require("./upload/uploadMiddleware");
+const {
+  uploadMiddleware,
+  cropImageMiddleware,
+} = require("./upload/uploadMiddleware");
 
 module.exports = {
   addAndUpdateValidation,
   authMiddleware,
   uploadMiddleware,
-  resizeAvatar,
+  cropImageMiddleware,
 };

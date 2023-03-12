@@ -11,7 +11,7 @@ const {
   authMiddleware,
   addAndUpdateValidation,
   uploadMiddleware,
-  resizeAvatar,
+  cropImageMiddleware,
 } = require("../../middlewares");
 
 const { joiUserSubscriptionSchema } = require("../../models");
@@ -31,7 +31,7 @@ router.patch(
   authMiddleware,
 
   uploadMiddleware.single("avatar"),
-  resizeAvatar,
+  cropImageMiddleware,
 
   asyncWrapper(updateUserAvatarController)
 );

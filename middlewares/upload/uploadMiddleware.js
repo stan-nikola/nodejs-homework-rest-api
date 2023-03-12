@@ -1,6 +1,7 @@
 const multer = require("multer");
 const path = require("path");
 const Jimp = require("jimp");
+const fs = require("fs");
 
 const { UnsupportedUploadFileError } = require("../../helpers");
 
@@ -21,19 +22,26 @@ const multerConfig = multer.diskStorage({
 const uploadMiddleware = multer({ storage: multerConfig });
 
 const cropImageMiddleware = async (req, resp, next) => {
-  try {
-    const { path: filePath, filename } = req.file;
+  if (!req.file) {
+    next(new UnsupportedUploadFileError("File not provided"));
+    return;
+  }
 
+  const { path: filePath, filename } = req.file;
+
+  try {
     const cropImgDir = path.join(tempDir, filename);
 
     const cropImg = await Jimp.read(filePath);
-    cropImg.resize(250, 250).write(cropImgDir);
+
+    cropImg.resize(250, 250).quality(60).write(cropImgDir);
 
     next();
   } catch (error) {
-    next(
-      new UnsupportedUploadFileError("File type unsupported or not provided")
-    );
+    fs.unlink(filePath, (err) => {
+      if (err) next(new Error(err));
+    });
+    next(new UnsupportedUploadFileError("File type unsupported"));
   }
 };
 

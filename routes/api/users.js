@@ -19,6 +19,7 @@ const { joiUserSubscriptionSchema } = require("../../models");
 const router = express.Router();
 
 router.get("/current", authMiddleware, asyncWrapper(currentUserController));
+
 router.patch(
   "/subscription",
   authMiddleware,

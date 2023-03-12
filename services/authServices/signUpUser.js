@@ -6,7 +6,7 @@ const { ConflictAuthorizedError } = require("../../helpers/errors");
 const signUpUser = async (data) => {
   const { email, password, subscription } = data;
 
-  const avatarURL = gravatar.url(email);
+  const avatarURL = gravatar.url(email).slice(2);
 
   const user = await User.findOne({ email });
 

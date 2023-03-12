@@ -1,7 +1,12 @@
 const { currentUserController } = require("./currentUserController");
-const { subscriptionUserController } = require("./subscriptionUserController");
+const {
+  updateUserSubscriptionController,
+} = require("./updateUserSubscriptionController");
+
+const { updateUserAvatarController } = require("./updateUserAvatarController");
 
 module.exports = {
   currentUserController,
-  subscriptionUserController,
+  updateUserSubscriptionController,
+  updateUserAvatarController,
 };

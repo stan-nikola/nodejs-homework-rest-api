@@ -1,6 +1,6 @@
 const { changeUserSubscription } = require("../../services");
 
-const subscriptionUserController = async (req, res) => {
+const updateUserSubscriptionController = async (req, res) => {
   const { _id } = req.user;
   const { subscription } = req.body;
 
@@ -9,4 +9,4 @@ const subscriptionUserController = async (req, res) => {
   res.json(result);
 };
 
-module.exports = { subscriptionUserController };
+module.exports = { updateUserSubscriptionController };

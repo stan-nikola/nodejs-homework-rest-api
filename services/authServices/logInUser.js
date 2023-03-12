@@ -17,14 +17,14 @@ const logInUser = async ({ email: userEmail, password: userPassword }) => {
 
   const token = jwt.sign({ _id, createdAt }, process.env.JWT_SECRET);
 
-  const { email, subscription } = await User.findByIdAndUpdate(
+  const { email, subscription, avatarURL } = await User.findByIdAndUpdate(
     { _id },
     { token }
   );
 
   return {
     token,
-    user: { email, subscription },
+    user: { email, subscription, avatarURL },
   };
 };
 

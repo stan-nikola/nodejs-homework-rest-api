@@ -9,7 +9,8 @@ const {
 
 const {
   currentUserController,
-  subscriptionUserController,
+  updateUserSubscriptionController,
+  updateUserAvatarController,
 } = require("./userControllers");
 
 const {
@@ -29,5 +30,6 @@ module.exports = {
   logInController,
   logOutController,
   currentUserController,
-  subscriptionUserController,
+  updateUserSubscriptionController,
+  updateUserAvatarController,
 };

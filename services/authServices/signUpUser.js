@@ -8,8 +8,6 @@ const signUpUser = async (data) => {
 
   const avatarURL = gravatar.url(email);
 
-  console.log(avatarURL);
-
   const user = await User.findOne({ email });
 
   if (user) {

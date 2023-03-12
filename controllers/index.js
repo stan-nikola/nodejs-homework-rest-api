@@ -8,12 +8,15 @@ const {
 } = require("./contactControllers");
 
 const {
-  signUpController,
-  logInController,
-  logOutController,
   currentUserController,
   subscriptionUserController,
 } = require("./userControllers");
+
+const {
+  signUpController,
+  logInController,
+  logOutController,
+} = require("./authControllers");
 
 module.exports = {
   getContactsController,

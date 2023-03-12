@@ -6,6 +6,7 @@ const {
   NonExistingParamsError,
   NotAuthorizedError,
   ConflictAuthorizedError,
+  UnsupportedUploadFileError,
 } = require("./errors");
 
 const { verifyToken } = require("./verifyToken");
@@ -19,4 +20,5 @@ module.exports = {
   NotAuthorizedError,
   ConflictAuthorizedError,
   verifyToken,
+  UnsupportedUploadFileError,
 };

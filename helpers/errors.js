@@ -32,10 +32,18 @@ class ConflictAuthorizedError extends NodeContactsAppError {
   }
 }
 
+class UnsupportedUploadFileError extends NodeContactsAppError {
+  constructor(message) {
+    super(message);
+    this.status = 415;
+  }
+}
+
 module.exports = {
   NodeContactsAppError,
   ValidationError,
   NonExistingParamsError,
   NotAuthorizedError,
   ConflictAuthorizedError,
+  UnsupportedUploadFileError,
 };

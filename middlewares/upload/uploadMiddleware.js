@@ -1,10 +1,10 @@
 const multer = require("multer");
-
 const path = require("path");
+const Jimp = require("jimp");
+
+const { UnsupportedUploadFileError } = require("../../helpers");
 
 const tempDir = path.join(__dirname, "../../", "tmp");
-
-console.log(tempDir);
 
 const multerConfig = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -20,21 +20,17 @@ const multerConfig = multer.diskStorage({
 
 const uploadMiddleware = multer({ storage: multerConfig });
 
-module.exports = { uploadMiddleware };
+const resizeAvatar = async (req, resp, next) => {
+  try {
+    const { path, filename } = req.file;
 
-// router.post("/avatars", upload.single("image"), async (req, res) => {
-//   const { path: tempUpload, originalname } = req.file;
+    const cropImg = await Jimp.read(path);
+    cropImg.resize(250, 250).write(`${tempDir}/${filename}`);
 
-//   try {
-//     await fs.rename(
-//       tempUpload,
-//       path.resolve(`./public/avatars/${originalname}`)
-//     );
-//   } catch (error) {
-//     fs.unlink(tempUpload);
-//   }
-// });
+    next();
+  } catch (error) {
+    next(new UnsupportedUploadFileError("File not supported, or exist"));
+  }
+};
 
-// router.get("/avatars");
-
-// ++++++++++++++++++++++++++++++++++++++++++++
+module.exports = { uploadMiddleware, resizeAvatar };

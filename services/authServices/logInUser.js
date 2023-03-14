@@ -28,7 +28,7 @@ const logInUser = async (requestBody) => {
     subscription,
     avatarURL,
     token: userToken,
-  } = await User.findByIdAndUpdate({ _id }, { token });
+  } = await User.findByIdAndUpdate({ _id }, { token }, { new: true });
 
   return {
     token: userToken,

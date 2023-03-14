@@ -8,11 +8,11 @@ const updateUserAvatarController = async (req, res) => {
   const { path: tempPath, originalname } = req.file;
   const { _id: userId } = req.user;
 
-  const userIdAvatarName = `${userId}_${originalname}`;
+  const userAvatarName = `${userId}_${originalname}`;
 
-  const publicPath = path.join(avatarsDir, userIdAvatarName);
+  const publicPath = path.join(avatarsDir, userAvatarName);
 
-  const avatarURL = path.join("avatars", userIdAvatarName).replace(/\\/g, "/");
+  const avatarURL = path.join("avatars", userAvatarName).replace(/\\/g, "/");
 
   const result = await updateUserAvatar(
     userId,

@@ -47,10 +47,19 @@ describe("controllers test", () => {
     expect(typeof avatarURL).toEqual("string");
   });
 
-  it("logInController authorization error", () => {
+  it("logInController bad request error", () => {
     request(app).post("/api/users/login").send({
       // email: "emerleite@gmail.com",
       password: "123456",
+    });
+
+    expect(() => NotAuthorizedError()).toThrow();
+  });
+
+  it("logInController authorization error", () => {
+    request(app).post("/api/users/login").send({
+      email: "emerleite@gmail.com",
+      password: "12345",
     });
 
     expect(() => NotAuthorizedError()).toThrow();

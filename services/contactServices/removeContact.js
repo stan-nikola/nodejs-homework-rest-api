@@ -7,8 +7,6 @@ const removeContact = async (contactId, owner) => {
     owner,
   });
 
-  console.log(result);
-
   if (!result) {
     throw new NonExistingParamsError(`Contact with id: ${contactId} not found`);
   }

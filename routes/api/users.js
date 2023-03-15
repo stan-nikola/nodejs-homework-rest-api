@@ -2,35 +2,39 @@ const express = require("express");
 
 const { asyncWrapper } = require("../../helpers/apiHelpers");
 const {
-  signUpController,
-  logInController,
-  logOutController,
   currentUserController,
-  subscriptionUserController,
+  updateUserSubscriptionController,
+  updateUserAvatarController,
 } = require("../../controllers");
 
-const { authMiddleware, addAndUpdateValidation } = require("../../middlewares");
-
 const {
-  joiRegisterSchema,
-  joiUserSubscriptionSchema,
-} = require("../../models");
+  authMiddleware,
+  addAndUpdateValidation,
+  uploadMiddleware,
+  cropImageMiddleware,
+} = require("../../middlewares");
+
+const { joiUserSubscriptionSchema } = require("../../models");
 
 const router = express.Router();
 
-router.post(
-  "/signup",
-  addAndUpdateValidation(joiRegisterSchema),
-  asyncWrapper(signUpController)
-);
-router.post("/login", asyncWrapper(logInController));
-router.get("/logout", authMiddleware, asyncWrapper(logOutController));
 router.get("/current", authMiddleware, asyncWrapper(currentUserController));
+
 router.patch(
   "/subscription",
   authMiddleware,
   addAndUpdateValidation(joiUserSubscriptionSchema),
-  asyncWrapper(subscriptionUserController)
+  asyncWrapper(updateUserSubscriptionController)
+);
+
+router.patch(
+  "/avatars",
+  authMiddleware,
+
+  uploadMiddleware.single("avatar"),
+  cropImageMiddleware,
+
+  asyncWrapper(updateUserAvatarController)
 );
 
 module.exports = { usersRouter: router };

@@ -5,7 +5,13 @@ const { User } = require("../../models");
 
 const { NotAuthorizedError } = require("../../helpers/errors");
 
-const logInUser = async ({ email: userEmail, password: userPassword }) => {
+const logInUser = async (requestBody) => {
+  if (Object.keys(requestBody).length < 2) {
+    throw new NotAuthorizedError("Email or password is absent");
+  }
+
+  const { email: userEmail, password: userPassword } = requestBody;
+
   const user = await User.findOne({ email: userEmail });
   // const user = await User.exists({ email: userEmail });
 
@@ -17,14 +23,16 @@ const logInUser = async ({ email: userEmail, password: userPassword }) => {
 
   const token = jwt.sign({ _id, createdAt }, process.env.JWT_SECRET);
 
-  const { email, subscription } = await User.findByIdAndUpdate(
-    { _id },
-    { token }
-  );
+  const {
+    email,
+    subscription,
+    avatarURL,
+    token: userToken,
+  } = await User.findByIdAndUpdate({ _id }, { token }, { new: true });
 
   return {
-    token,
-    user: { email, subscription },
+    token: userToken,
+    user: { email, subscription, avatarURL },
   };
 };
 

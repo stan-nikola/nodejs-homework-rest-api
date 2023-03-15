@@ -8,12 +8,16 @@ const {
 } = require("./contactControllers");
 
 const {
+  currentUserController,
+  updateUserSubscriptionController,
+  updateUserAvatarController,
+} = require("./userControllers");
+
+const {
   signUpController,
   logInController,
   logOutController,
-  currentUserController,
-  subscriptionUserController,
-} = require("./userControllers");
+} = require("./authControllers");
 
 module.exports = {
   getContactsController,
@@ -26,5 +30,6 @@ module.exports = {
   logInController,
   logOutController,
   currentUserController,
-  subscriptionUserController,
+  updateUserSubscriptionController,
+  updateUserAvatarController,
 };

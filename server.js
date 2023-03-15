@@ -1,6 +1,6 @@
 const app = require("./app");
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3002 } = process.env;
 const { connectToContactsDb } = require("./models");
 
 connectToContactsDb()

@@ -1,13 +1,10 @@
-const { logInUser } = require("./logInUser");
-const { signUpUser } = require("./signUpUser");
-const { logOutUser } = require("./logOutUser");
 const { currentUser } = require("./currentUser");
 const { changeUserSubscription } = require("./changeUserSubscription");
 
+const { updateUserAvatar } = require("./updateUserAvatar");
+
 module.exports = {
-  signUpUser,
-  logInUser,
-  logOutUser,
   currentUser,
   changeUserSubscription,
+  updateUserAvatar,
 };

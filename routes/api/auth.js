@@ -6,6 +6,7 @@ const {
   logInController,
   logOutController,
   verificationController,
+  reVerificationController,
 } = require("../../controllers");
 
 const { authMiddleware, addAndUpdateValidation } = require("../../middlewares");
@@ -21,10 +22,7 @@ router.post(
 );
 router.post("/login", asyncWrapper(logInController));
 router.post("/logout", authMiddleware, asyncWrapper(logOutController));
-router.get(
-  "/verify/:verificationToken",
-
-  asyncWrapper(verificationController)
-);
+router.get("/verify/:verificationToken", asyncWrapper(verificationController));
+router.post("/verify", asyncWrapper(reVerificationController));
 
 module.exports = { authRouter: router };

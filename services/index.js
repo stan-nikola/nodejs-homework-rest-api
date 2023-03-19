@@ -18,6 +18,7 @@ const {
   logInUser,
   logOutUser,
   verifyUser,
+  reVerifyUser,
 } = require("./authServices");
 
 module.exports = {
@@ -34,4 +35,5 @@ module.exports = {
   changeUserSubscription,
   updateUserAvatar,
   verifyUser,
+  reVerifyUser,
 };

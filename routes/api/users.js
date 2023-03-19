@@ -30,10 +30,8 @@ router.patch(
 router.patch(
   "/avatars",
   authMiddleware,
-
   uploadMiddleware.single("avatar"),
   cropImageMiddleware,
-
   asyncWrapper(updateUserAvatarController)
 );
 

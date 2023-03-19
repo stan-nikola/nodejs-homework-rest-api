@@ -13,9 +13,12 @@ const logInUser = async (requestBody) => {
   const { email: userEmail, password: userPassword } = requestBody;
 
   const user = await User.findOne({ email: userEmail });
-  // const user = await User.exists({ email: userEmail });
 
-  const { _id, password, createdAt } = user;
+  const { _id, password, createdAt, verify } = user;
+
+  if (!verify) {
+    throw new NotAuthorizedError("User not verified");
+  }
 
   if (!user || !(await bcrypt.compare(userPassword, password))) {
     throw new NotAuthorizedError("Email or password is wrong");

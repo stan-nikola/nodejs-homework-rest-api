@@ -1,4 +1,4 @@
-const mailTemplate = (verifyToken) => `<!DOCTYPE html>
+const emailTemplate = (verifyToken) => `<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -359,4 +359,4 @@ const mailTemplate = (verifyToken) => `<!DOCTYPE html>
 ;
 `;
 
-module.exports = { mailTemplate };
+module.exports = { emailTemplate };

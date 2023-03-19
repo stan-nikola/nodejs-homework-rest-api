@@ -1,5 +1,5 @@
 const sgMail = require("@sendgrid/mail");
-const { mailTemplate } = require("./mailTemplate");
+const { emailTemplate } = require("../templates/emailTemplate");
 
 require("dotenv").config();
 
@@ -10,7 +10,7 @@ const sendEmail = (userMail, verifyToken) => {
     to: userMail,
     from: "no-reply-node.js-app@meta.ua",
     subject: " Verify Email Address node.js App",
-    html: mailTemplate(verifyToken),
+    html: emailTemplate(verifyToken),
   };
   sgMail
     .send(msg)

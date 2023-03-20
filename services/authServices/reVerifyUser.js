@@ -19,7 +19,7 @@ const reVerifyUser = async ({ email }) => {
   const { email: userEmail, verificationToken, verify } = user;
 
   if (verify) {
-    throw new VerificationError("Verification has already been passed");
+    throw new ValidationError("Verification has already been passed");
   }
 
   sendEmail(userEmail, verificationToken);

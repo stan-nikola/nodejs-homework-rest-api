@@ -4,12 +4,12 @@
 
 # User model
 
-> Content-Type: application/json
+> **Content-Type: application/json**
 
 - ### Create a new user
 
-  > **Verification email will be sent to the specified email address.**  
-  > Avatar is generated using [Gravatar](https://gravatar.com/)
+  > **Verification email will be sent to the specified email address.**
+  > **Avatar is generated using [Gravatar](https://gravatar.com/)**
 
   #### **POST** ​ /api/users​/signup
 
@@ -36,7 +36,7 @@ body:{
 
 - ### Verify User
 
-  > **User verification link will be sent by email**
+  > ****User verification link will be sent by email****
 
   #### **GET**​ /api/users/verify/:verificationToken
 
@@ -46,7 +46,7 @@ Example: "/users/verify/kjbad876eqwdbawi"
 
 - ### Retry Verify User
 
-  > **User verification link will be sent by email**
+  > ****User verification link will be sent by email****
 
   ##### **POST**​/api/users/verify
 
@@ -75,7 +75,7 @@ body:{
 
 - ### Update User Avatar
 
-  > **Uploaded avatar will be resized to 205\*250 pixels**
+  > ****Uploaded avatar will be resized to 205\*250 pixels****
 
   #### **PATCH**​/api/users/avatars
 
@@ -89,8 +89,6 @@ body:{
 }
 
 ```
-
-# ===============================================
 
 # Contact model
 

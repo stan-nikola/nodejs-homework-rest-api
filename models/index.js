@@ -4,6 +4,7 @@ const {
   User,
   joiRegisterSchema,
   joiUserSubscriptionSchema,
+  joiReVerifySchema,
 } = require("./user");
 
 const { connectToContactsDb } = require("./connection");
@@ -16,4 +17,5 @@ module.exports = {
   User,
   joiRegisterSchema,
   joiUserSubscriptionSchema,
+  joiReVerifySchema,
 };

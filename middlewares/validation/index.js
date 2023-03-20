@@ -1,3 +1,3 @@
-const { addAndUpdateValidation } = require("./addAndUpdateValidation");
+const { validationMiddleware } = require("./validalidationMiddleware");
 
-module.exports = { addAndUpdateValidation };
+module.exports = { validationMiddleware };

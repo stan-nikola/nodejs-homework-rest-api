@@ -1,6 +1,6 @@
 const { ValidationError } = require("../../helpers");
 
-const addAndUpdateValidation = (schema) => {
+const validationMiddleware = (schema) => {
   return (req, res, next) => {
     const validationResult = schema.validate(req.body);
 
@@ -13,4 +13,4 @@ const addAndUpdateValidation = (schema) => {
   };
 };
 
-module.exports = { addAndUpdateValidation };
+module.exports = { validationMiddleware };

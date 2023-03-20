@@ -9,20 +9,29 @@ const {
   reVerificationController,
 } = require("../../controllers");
 
-const { authMiddleware, addAndUpdateValidation } = require("../../middlewares");
+const { authMiddleware, validationMiddleware } = require("../../middlewares");
 
 const { joiRegisterSchema } = require("../../models");
+const { joiLoginSchema, joiReVerifySchema } = require("../../models/user");
 
 const router = express.Router();
 
 router.post(
   "/signup",
-  addAndUpdateValidation(joiRegisterSchema),
+  validationMiddleware(joiRegisterSchema),
   asyncWrapper(signUpController)
 );
-router.post("/login", asyncWrapper(logInController));
+router.post(
+  "/login",
+  validationMiddleware(joiLoginSchema),
+  asyncWrapper(logInController)
+);
 router.post("/logout", authMiddleware, asyncWrapper(logOutController));
 router.get("/verify/:verificationToken", asyncWrapper(verificationController));
-router.post("/verify", asyncWrapper(reVerificationController));
+router.post(
+  "/verify",
+  validationMiddleware(joiReVerifySchema),
+  asyncWrapper(reVerificationController)
+);
 
 module.exports = { authRouter: router };

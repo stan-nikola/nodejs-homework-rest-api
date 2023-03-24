@@ -3,6 +3,8 @@
         "alphanum",
         "cloudinary",
         "examplepassword",
-        "tlds"
+        "SENDGRID",
+        "tlds",
+        "uuidv"
     ]
 }

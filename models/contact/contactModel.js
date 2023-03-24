@@ -11,14 +11,14 @@ const joiContactSchema = Joi.object({
     })
     .required(),
   favorite: Joi.boolean(),
-});
+}).options({ abortEarly: false });
 
 const joiFavoriteSchema = Joi.object({
   favorite: Joi.boolean()
     .required()
     .valid(true, false)
     .messages({ "any.required": "missing field favorite" }),
-});
+}).options({ abortEarly: false });
 
 const contactSchema = Schema(
   {

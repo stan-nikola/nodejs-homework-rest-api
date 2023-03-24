@@ -17,6 +17,8 @@ const {
   signUpController,
   logInController,
   logOutController,
+  verificationController,
+  reVerificationController,
 } = require("./authControllers");
 
 module.exports = {
@@ -32,4 +34,6 @@ module.exports = {
   currentUserController,
   updateUserSubscriptionController,
   updateUserAvatarController,
+  verificationController,
+  reVerificationController,
 };

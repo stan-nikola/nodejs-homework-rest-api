@@ -11,6 +11,12 @@ class ValidationError extends NodeContactsAppError {
     this.status = 400;
   }
 }
+class VerificationError extends NodeContactsAppError {
+  constructor(message) {
+    super(message);
+    this.status = 404;
+  }
+}
 
 class NonExistingParamsError extends NodeContactsAppError {
   constructor(message) {
@@ -46,4 +52,5 @@ module.exports = {
   NotAuthorizedError,
   ConflictAuthorizedError,
   UnsupportedUploadFileError,
+  VerificationError,
 };

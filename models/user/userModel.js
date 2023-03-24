@@ -12,7 +12,26 @@ const joiRegisterSchema = Joi.object({
   password: Joi.string().min(6).alphanum().required(),
 
   subscription: Joi.string().valid("starter", "pro", "business"),
-});
+}).options({ abortEarly: false });
+
+const joiLoginSchema = Joi.object({
+  email: Joi.string()
+    .email({
+      minDomainSegments: 2,
+      tlds: { allow: ["com", "net", "uk", "ua", "org"] },
+    })
+    .required(),
+  password: Joi.string().min(6).alphanum().required(),
+}).options({ abortEarly: false });
+
+const joiReVerifySchema = Joi.object({
+  email: Joi.string()
+    .email({
+      minDomainSegments: 2,
+      tlds: { allow: ["com", "net", "uk", "ua", "org"] },
+    })
+    .required(),
+}).options({ abortEarly: false });
 
 const joiUserSubscriptionSchema = Joi.object({
   subscription: Joi.string().valid("starter", "pro", "business").required(),
@@ -40,6 +59,14 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -52,4 +79,10 @@ userSchema.pre("save", async function () {
 
 const User = model("user", userSchema);
 
-module.exports = { User, joiRegisterSchema, joiUserSubscriptionSchema };
+module.exports = {
+  User,
+  joiRegisterSchema,
+  joiUserSubscriptionSchema,
+  joiLoginSchema,
+  joiReVerifySchema,
+};

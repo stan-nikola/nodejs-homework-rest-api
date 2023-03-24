@@ -3,22 +3,21 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../../models");
 
-const { NotAuthorizedError } = require("../../helpers/errors");
+const { NotAuthorizedError } = require("../../helpers");
 
 const logInUser = async (requestBody) => {
-  if (Object.keys(requestBody).length < 2) {
-    throw new NotAuthorizedError("Email or password is absent");
-  }
-
   const { email: userEmail, password: userPassword } = requestBody;
 
   const user = await User.findOne({ email: userEmail });
-  // const user = await User.exists({ email: userEmail });
 
-  const { _id, password, createdAt } = user;
-
-  if (!user || !(await bcrypt.compare(userPassword, password))) {
+  if (!user || !(await bcrypt.compare(userPassword, user.password))) {
     throw new NotAuthorizedError("Email or password is wrong");
+  }
+
+  const { _id, createdAt, verify } = user;
+
+  if (!verify) {
+    throw new NotAuthorizedError("User not verified");
   }
 
   const token = jwt.sign({ _id, createdAt }, process.env.JWT_SECRET);

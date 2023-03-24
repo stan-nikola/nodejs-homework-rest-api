@@ -7,9 +7,11 @@ const {
   NotAuthorizedError,
   ConflictAuthorizedError,
   UnsupportedUploadFileError,
+  VerificationError,
 } = require("./errors");
 
 const { verifyToken } = require("./verifyToken");
+const { sendEmail } = require("./SGSendEmail");
 
 module.exports = {
   asyncWrapper,
@@ -21,4 +23,6 @@ module.exports = {
   ConflictAuthorizedError,
   verifyToken,
   UnsupportedUploadFileError,
+  sendEmail,
+  VerificationError,
 };

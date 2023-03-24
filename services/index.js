@@ -13,7 +13,13 @@ const {
   updateUserAvatar,
 } = require("./userServices/");
 
-const { signUpUser, logInUser, logOutUser } = require("./authServices");
+const {
+  signUpUser,
+  logInUser,
+  logOutUser,
+  verifyUser,
+  reVerifyUser,
+} = require("./authServices");
 
 module.exports = {
   getContacts,
@@ -28,4 +34,6 @@ module.exports = {
   currentUser,
   changeUserSubscription,
   updateUserAvatar,
+  verifyUser,
+  reVerifyUser,
 };

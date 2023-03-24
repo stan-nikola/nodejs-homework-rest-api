@@ -9,7 +9,7 @@ const {
 
 const {
   authMiddleware,
-  addAndUpdateValidation,
+  validationMiddleware,
   uploadMiddleware,
   cropImageMiddleware,
 } = require("../../middlewares");
@@ -23,17 +23,15 @@ router.get("/current", authMiddleware, asyncWrapper(currentUserController));
 router.patch(
   "/subscription",
   authMiddleware,
-  addAndUpdateValidation(joiUserSubscriptionSchema),
+  validationMiddleware(joiUserSubscriptionSchema),
   asyncWrapper(updateUserSubscriptionController)
 );
 
 router.patch(
   "/avatars",
   authMiddleware,
-
   uploadMiddleware.single("avatar"),
   cropImageMiddleware,
-
   asyncWrapper(updateUserAvatarController)
 );
 

@@ -1,38 +1,17 @@
 /* eslint-disable no-undef */
-const express = require("express");
+
 const request = require("supertest");
-require("dotenv").config();
 
-const { connectToContactsDb } = require("../models");
-const {
-  logInController,
-} = require("../controllers/authControllers/logInController");
-
-const { NotAuthorizedError } = require("../helpers");
-
-const app = express();
-
-app.use(express.json());
-
-app.post("/api/users/login", logInController);
+const app = require("../server");
 
 describe("controllers test", () => {
-  beforeAll(async () => {
-    await connectToContactsDb()
-      .then(async () => {
-        console.log("Database connection successful");
-        app.listen(3003);
-      })
-      .catch((err) => {
-        console.log(`Database connection error:${err.message}`);
-      });
+  afterAll(async () => {
+    await app.close();
   });
-
-  // afterAll(() => app.close());
 
   it("logInController return token and 3 string fields", async () => {
     const response = await request(app).post("/api/users/login").send({
-      email: "emerleite@gmail.com",
+      email: "stasontmt@gmail.com",
       password: "123456",
     });
 
